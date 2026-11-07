@@ -64,6 +64,43 @@ def test_marine_returns_502_when_upstream_fails(
     assert response.status_code == 502
 
 
+BUOY_TEXT = """#YY  MM DD hh mm WDIR WSPD GST  WVHT   DPD   APD MWD   PRES  ATMP  WTMP
+#yr  mo dy hr mn degT m/s  m/s     m   sec   sec degT   hPa  degC  degC
+2026 11 07 18 56  MM   MM   MM   0.9    15   8.6 255     MM    MM  17.4
+2026 11 07 18 26  MM   MM   MM   0.8    15   8.4 254     MM    MM  17.4
+"""
+
+
+def test_buoy_returns_latest_readings(
+    use_upstream: Callable[[Handler], None],
+) -> None:
+    use_upstream(lambda request: httpx.Response(200, text=BUOY_TEXT))
+
+    response = TestClient(app).get("/buoy", params={"limit": 1})
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["station"] == "46256"
+    assert len(body["readings"]) == 1
+    assert body["readings"][0]["dominant_period_s"] == 15
+
+
+def test_buoy_returns_502_when_upstream_fails(
+    use_upstream: Callable[[Handler], None],
+) -> None:
+    use_upstream(lambda request: httpx.Response(404))
+
+    response = TestClient(app).get("/buoy")
+
+    assert response.status_code == 502
+
+
+def test_buoy_validates_station() -> None:
+    response = TestClient(app).get("/buoy", params={"station": "../etc"})
+
+    assert response.status_code == 422
+
+
 def test_marine_validates_latitude() -> None:
     response = TestClient(app).get("/marine", params={"latitude": 200})
 

@@ -6,7 +6,12 @@ from typing import Annotated
 import httpx
 from fastapi import Depends, FastAPI, HTTPException, Query
 
-from surfreport.models import MarineForecast
+from surfreport.models import BuoyObservations, MarineForecast
+from surfreport.sources.ndbc import (
+    LONG_BEACH_CHANNEL,
+    NdbcError,
+    fetch_buoy_observations,
+)
 from surfreport.sources.open_meteo import OpenMeteoError, fetch_marine_forecast
 
 HB_PIER_LATITUDE = 33.655
@@ -64,3 +69,31 @@ async def marine_forecast(
         )
     except OpenMeteoError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+
+@app.get("/buoy")
+async def buoy_observations(
+    client: Annotated[httpx.AsyncClient, Depends(get_http_client)],
+    station: Annotated[str, Query(pattern=r"^[0-9A-Za-z]{5}$")] = LONG_BEACH_CHANNEL,
+    limit: Annotated[int, Query(ge=1, le=500)] = 24,
+) -> BuoyObservations:
+    """Return recent observations from an NDBC buoy, newest first.
+
+    Defaults to Long Beach Channel (NDBC 46256, CDIP 215).
+
+    Args:
+        client: Injected HTTP client.
+        station: NDBC station id.
+        limit: Maximum number of readings to return.
+
+    Returns:
+        The latest readings from the station.
+
+    Raises:
+        HTTPException: 502 if NDBC fails.
+    """
+    try:
+        observations = await fetch_buoy_observations(client, station)
+    except NdbcError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+    return observations.model_copy(update={"readings": observations.readings[:limit]})

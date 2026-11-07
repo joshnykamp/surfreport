@@ -29,7 +29,7 @@ Deterministic Python fetchers that pull buoy, wind, tide and swell forecast data
 
 ## Tasks
 - [x] `uv init`, set up project layout, ruff, mypy, pytest
-- [ ] NDBC fetcher
+- [x] NDBC fetcher (Long Beach Channel 46256 default; any station id)
 - [x] Open-Meteo Marine fetcher (swell, waves, water temp)
 - [ ] NWS wind fetcher
 - [ ] CO-OPS tide fetcher

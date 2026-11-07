@@ -15,6 +15,9 @@ Define what a spot is and how offshore swell translates into surf at that spot. 
 | Blackies | Usually small |
 | The Point (optional) | Between Blackies south side and the Wedge; gets big |
 
+## Reference data
+- Primary buoy for Huntington Beach spots: Long Beach Channel, NDBC 46256 / CDIP 215 (confirmed)
+
 ## In scope
 - Spot metadata: name, lat/lon, nearest buoys, tide station, facing direction, ideal swell direction window, ideal tide range, ideal wind direction
 - Swell shadowing: which swell directions are blocked by Catalina and the Channel Islands per spot

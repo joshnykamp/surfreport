@@ -17,3 +17,5 @@
 - Load balancer deferred (stage 08); AWS estimate now about $30 to $40 a month
 - Database layer added: SQLAlchemy (async), Alembic, psycopg; `marine_snapshots` table stores every fetched forecast as JSON; Postgres tests run when DATABASE_URL is set
 - Next: run Postgres locally and migrate, then NDBC buoy fetcher
+- NDBC buoy fetcher added, defaulting to Long Beach Channel (NDBC 46256 / CDIP 215); `GET /buoy` shows recent readings. HB Nearshore buoy (46230) appears retired.
+- Confirmed Long Beach Channel (NDBC 46256) as the primary buoy for Huntington Beach spots

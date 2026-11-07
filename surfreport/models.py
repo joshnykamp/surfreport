@@ -27,6 +27,33 @@ class MarineHour(BaseModel):
     water_temp_f: float | None = None
 
 
+class BuoyReading(BaseModel):
+    """One observation from a wave buoy.
+
+    Heights are in feet, periods in seconds, directions in degrees the
+    waves or wind are coming from, wind in knots and water temperature in
+    Fahrenheit. Any field can be None when the buoy did not report it.
+    """
+
+    time: datetime
+    wave_height_ft: float | None = None
+    dominant_period_s: float | None = None
+    average_period_s: float | None = None
+    mean_direction_deg: float | None = None
+    wind_direction_deg: float | None = None
+    wind_speed_kt: float | None = None
+    water_temp_f: float | None = None
+
+
+class BuoyObservations(BaseModel):
+    """Recent observations from one buoy station, newest first."""
+
+    source: str
+    station: str
+    fetched_at: datetime
+    readings: list[BuoyReading]
+
+
 class MarineForecast(BaseModel):
     """An hourly marine forecast for one point, as returned by a source."""
 
