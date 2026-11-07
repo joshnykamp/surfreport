@@ -18,7 +18,17 @@ Define what a spot is and how offshore swell translates into surf at that spot. 
 ## Reference data
 - Primary buoy for Huntington Beach spots: Long Beach Channel, NDBC 46256 / CDIP 215 (confirmed)
 
-## In scope
+## Tide effects (local knowledge)
+- High or deep tide: waves get sluggish or break right on the beach
+- Low tide: waves get hollow and barrel, but at some spots can shut down or disappear
+- Each spot needs its own good tide window
+
+## Wind effects (local knowledge)
+- Offshore vs onshore depends on each spot's shore facing direction, so every spot stores a shore normal angle and wind is judged relative to it
+- From the HB Pier through Bolsa Chica the beach faces about southwest, so NE through E is offshore; the coastline starts to turn at Newport, so Newport spots need their own angle
+- Onshore around 8 knots or more makes the waves crumble; still surfable, but quality drops
+- Offshore is good, including strong Santa Ana winds
+
 - Spot metadata: name, lat/lon, nearest buoys, tide station, facing direction, ideal swell direction window, ideal tide range, ideal wind direction
 - Swell shadowing: which swell directions are blocked by Catalina and the Channel Islands per spot
 - A per spot size adjustment relative to the buoy (e.g. "runs smaller than the buoy suggests"), tunable from observations

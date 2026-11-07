@@ -19,3 +19,5 @@
 - Next: run Postgres locally and migrate, then NDBC buoy fetcher
 - NDBC buoy fetcher added, defaulting to Long Beach Channel (NDBC 46256 / CDIP 215); `GET /buoy` shows recent readings. HB Nearshore buoy (46230) appears retired.
 - Confirmed Long Beach Channel (NDBC 46256) as the primary buoy for Huntington Beach spots
+- NWS hourly wind fetcher added on `feature/wind`; `GET /wind` returns 7 days of hourly wind (knots, direction) and air temp for HB Pier. Tide notes added to stage 02. Next: CO-OPS tides.
+- CO-OPS tide fetcher added; `GET /tides` returns high and low tides (or hourly) for Newport Beach. Wind rules added to stage 02 (per spot shore angle, onshore 8 kt+ hurts, offshore and Santa Anas good). All four stage 01 sources done.

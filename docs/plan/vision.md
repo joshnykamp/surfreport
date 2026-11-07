@@ -14,7 +14,7 @@ An open source surf forecast that gathers free data sources and uses an LLM to t
 - Swell height, period (16s beats 8s at the same size) and direction
 - Swell shadowing by Catalina and the Channel Islands
 - Wind speed and direction (offshore vs onshore)
-- Tide height and direction
+- Tide height and direction (high tide: sluggish or shore break; low tide: hollow, sometimes shuts down)
 - Water temperature
 - How each spot reacts to all of the above (see stage 02)
 

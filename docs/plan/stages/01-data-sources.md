@@ -23,17 +23,17 @@ Deterministic Python fetchers that pull buoy, wind, tide and swell forecast data
 - Interpreting the data (stage 02 and 03)
 
 ## Acceptance criteria
-- [ ] Each fetcher returns a typed object for a given station or lat/lon
-- [ ] Unit tests run offline against saved fixtures
-- [ ] Failures (source down, missing fields) are handled and reported, not crashed on
+- [x] Each fetcher returns a typed object for a given station or lat/lon
+- [x] Unit tests run offline against saved fixtures
+- [x] Failures (source down, missing fields) are handled and reported, not crashed on
 
 ## Tasks
 - [x] `uv init`, set up project layout, ruff, mypy, pytest
 - [x] NDBC fetcher (Long Beach Channel 46256 default; any station id)
 - [x] Open-Meteo Marine fetcher (swell, waves, water temp)
-- [ ] NWS wind fetcher
-- [ ] CO-OPS tide fetcher
-- [ ] Save fixtures
+- [x] NWS wind fetcher (hourly, 7 days, knots and direction)
+- [x] CO-OPS tide fetcher (Newport Beach 9410580; high/low or hourly, feet above MLLW)
+- [x] Save fixtures (hand written; replace with real captures)
 
 ## Open questions
 - Global expansion means NWS and CO-OPS will not cover everything. Lean on Open-Meteo for non US?

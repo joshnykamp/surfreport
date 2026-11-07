@@ -1,0 +1,42 @@
+{
+  "type": "Feature",
+  "properties": {
+    "units": "us",
+    "generatedAt": "2026-11-07T20:00:00+00:00",
+    "periods": [
+      {
+        "number": 1,
+        "startTime": "2026-11-07T06:00:00-08:00",
+        "endTime": "2026-11-07T07:00:00-08:00",
+        "isDaytime": true,
+        "temperature": 58,
+        "temperatureUnit": "F",
+        "windSpeed": "5 mph",
+        "windDirection": "NE",
+        "shortForecast": "Sunny"
+      },
+      {
+        "number": 2,
+        "startTime": "2026-11-07T13:00:00-08:00",
+        "endTime": "2026-11-07T14:00:00-08:00",
+        "isDaytime": true,
+        "temperature": 68,
+        "temperatureUnit": "F",
+        "windSpeed": "10 to 15 mph",
+        "windDirection": "WSW",
+        "shortForecast": "Sunny"
+      },
+      {
+        "number": 3,
+        "startTime": "2026-11-07T22:00:00-08:00",
+        "endTime": "2026-11-07T23:00:00-08:00",
+        "isDaytime": false,
+        "temperature": 55,
+        "temperatureUnit": "F",
+        "windSpeed": "0 mph",
+        "windDirection": "",
+        "shortForecast": "Clear"
+      }
+    ]
+  }
+}

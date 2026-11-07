@@ -1,17 +1,24 @@
 """FastAPI entry point. Run with ``uv run fastapi dev main.py``."""
 
 from collections.abc import AsyncIterator
-from typing import Annotated
+from typing import Annotated, Literal
 
 import httpx
 from fastapi import Depends, FastAPI, HTTPException, Query
 
-from surfreport.models import BuoyObservations, MarineForecast
+from surfreport.models import (
+    BuoyObservations,
+    MarineForecast,
+    TideForecast,
+    WindForecast,
+)
+from surfreport.sources.coops import NEWPORT_BEACH, CoopsError, fetch_tide_predictions
 from surfreport.sources.ndbc import (
     LONG_BEACH_CHANNEL,
     NdbcError,
     fetch_buoy_observations,
 )
+from surfreport.sources.nws import NwsError, fetch_wind_forecast
 from surfreport.sources.open_meteo import OpenMeteoError, fetch_marine_forecast
 
 HB_PIER_LATITUDE = 33.655
@@ -97,3 +104,61 @@ async def buoy_observations(
     except NdbcError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     return observations.model_copy(update={"readings": observations.readings[:limit]})
+
+
+@app.get("/wind")
+async def wind_forecast(
+    client: Annotated[httpx.AsyncClient, Depends(get_http_client)],
+    latitude: Annotated[float, Query(ge=-90, le=90)] = HB_PIER_LATITUDE,
+    longitude: Annotated[float, Query(ge=-180, le=180)] = HB_PIER_LONGITUDE,
+) -> WindForecast:
+    """Return the hourly NWS wind forecast for a point.
+
+    Defaults to the Huntington Beach Pier. US locations only.
+
+    Args:
+        client: Injected HTTP client.
+        latitude: Latitude of the point.
+        longitude: Longitude of the point.
+
+    Returns:
+        The hourly wind forecast.
+
+    Raises:
+        HTTPException: 502 if the NWS API fails.
+    """
+    try:
+        return await fetch_wind_forecast(client, latitude, longitude)
+    except NwsError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+
+@app.get("/tides")
+async def tide_predictions(
+    client: Annotated[httpx.AsyncClient, Depends(get_http_client)],
+    station: Annotated[str, Query(pattern=r"^[0-9]{7}$")] = NEWPORT_BEACH,
+    interval: Literal["hilo", "h"] = "hilo",
+    days: Annotated[int, Query(ge=1, le=31)] = 7,
+) -> TideForecast:
+    """Return tide predictions in feet above MLLW, with UTC times.
+
+    Defaults to Newport Beach (CO-OPS 9410580), high and low tides only.
+
+    Args:
+        client: Injected HTTP client.
+        station: CO-OPS station id.
+        interval: ``hilo`` for high and low tides, ``h`` for hourly heights.
+        days: Number of days to predict.
+
+    Returns:
+        The tide predictions.
+
+    Raises:
+        HTTPException: 502 if CO-OPS fails.
+    """
+    try:
+        return await fetch_tide_predictions(
+            client, station=station, days=days, interval=interval
+        )
+    except CoopsError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
