@@ -11,8 +11,8 @@ Define what a spot is and how offshore swell translates into surf at that spot. 
 | HB Pier, northside | Usually good; often a bit better than southside |
 | HB Pier, southside | Usually good |
 | Bolsa Chica to the Cliffs | Beach break; usually a little smaller |
-| Newport jetties | Each jetty breaks differently; named by street number (e.g. 56th St) |
-| Blackies | Usually small |
+| Newport jetties | Each jetty breaks differently; named by street number (e.g. 56th St); face more west |
+| Blackies | Usually small; faces west to southwest and needs a west swell to work |
 | The Point (optional) | Between Blackies south side and the Wedge; gets big |
 
 ## Reference data
@@ -21,13 +21,14 @@ Define what a spot is and how offshore swell translates into surf at that spot. 
 ## Tide effects (local knowledge)
 - High or deep tide: waves get sluggish or break right on the beach
 - Low tide: waves get hollow and barrel, but at some spots can shut down or disappear
-- Each spot needs its own good tide window
+- Each spot needs its own good tide window; most local spots work between about 1 ft and 4 ft
 
 ## Wind effects (local knowledge)
 - Offshore vs onshore depends on each spot's shore facing direction, so every spot stores a shore normal angle and wind is judged relative to it
 - From the HB Pier through Bolsa Chica the beach faces about southwest, so NE through E is offshore; the coastline starts to turn at Newport, so Newport spots need their own angle
 - Onshore around 8 knots or more makes the waves crumble; still surfable, but quality drops
 - Offshore is good, including strong Santa Ana winds
+- Shore angles should be derived from the actual coastline geometry rather than estimated by hand
 
 - Spot metadata: name, lat/lon, nearest buoys, tide station, facing direction, ideal swell direction window, ideal tide range, ideal wind direction
 - Swell shadowing: which swell directions are blocked by Catalina and the Channel Islands per spot

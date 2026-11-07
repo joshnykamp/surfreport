@@ -24,6 +24,24 @@ Capture what the surf actually looked like and use it to measure and improve pre
 - [ ] An accuracy metric can be computed per spot over time
 - [ ] Past observations can be replayed against a changed prompt or config (offline eval)
 
+## Surf log (main source of observations)
+Give surfers a personal surf log they want to keep for themselves. Because the log is for their own record, the data should be honest, which also addresses the bad data problem below.
+
+Each session records:
+- Spot, date and time
+- Board and wetsuit used
+- Wave size and number of waves caught
+- Session rating
+
+What the surfer gets back:
+- Their gear and board history, and what worked in which conditions
+- How they surfed over the year
+
+What the forecast gets:
+- Accurate observed conditions per spot and time, joined to the stored prediction for that moment
+
+Requires user accounts and profiles (currently a non goal; this moves it into scope for stage 06).
+
 ## Trust and bad data
 Community ratings (spots rated up or down) are a goal, but surfers may deliberately log bad data on good days to keep crowds away. Options to weigh:
 - Verified accounts only, no anonymous submissions
